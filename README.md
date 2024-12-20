@@ -14,6 +14,8 @@ Este proyecto implementa una aplicación web para gestionar contactos utilizando
 - **Mensajes Flash**: Proporciona retroalimentación al usuario.
 - **Plantillas HTML**: Renderiza vístas personalizadas.
 
+
+
 ## Rutas y Funcionalidades
 
 ### 1. Ruta Principal (`/`)
@@ -186,4 +188,131 @@ O utilizando `pytest`:
 ```bash
 pytest
 ```
+
+# Despliegue de Aplicación Flask con PostgreSQL en Render
+
+Este repositorio contiene una aplicación web construida con **Flask** y conectada a una base de datos **PostgreSQL**. Los pasos a continuación explican cómo desplegar la aplicación en **Render.com**.
+
+## 1. Crear la Base de Datos PostgreSQL en Render
+
+1. Inicia sesión en [Render](https://render.com) y accede a tu cuenta.
+2. Crea una base de datos PostgreSQL:
+   - Haz clic en **"New"** > **"Database"**.
+   - Selecciona **PostgreSQL**.
+   - Configura los parámetros:
+     - **Nombre de la base de datos**: Por ejemplo, `flaskdb`.
+     - **Región**: Elige la más cercana.
+   - Haz clic en **Create Database**.
+3. Copia la URI de conexión que aparece en el panel de configuración de la base de datos:
+   - **Internal Database URL**: Se usa si la base de datos y la app están dentro de Render.
+   - **External Database URL**: Se usa para conectarse desde fuera de Render.
+
+## 2. Configurar la Aplicación Flask
+
+### Instalar Dependencias
+
+En tu entorno de desarrollo local, instala las dependencias necesarias:
+
+```bash
+pip install psycopg2-binary flask-sqlalchemy gunicorn
+
+
+Configurar SQLAlchemy y la Conexión a la Base de Datos
+En tu archivo principal (app.py), configura la conexión a PostgreSQL usando la URI de conexión:
+
+import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+
+# URI de conexión a la base de datos PostgreSQL
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://user:password@localhost/db_name')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+# Definir un modelo de ejemplo
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<User {self.name}>'
+
+# Ruta de prueba
+@app.route('/')
+def index():
+    return '¡Conexión con PostgreSQL exitosa!'
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+Explicación:
+
+SQLALCHEMY_DATABASE_URI: Configura la URI para conectar Flask con PostgreSQL. Esto se hace leyendo una variable de entorno llamada DATABASE_URL.
+Modelo de ejemplo: El modelo User es solo un ejemplo para ilustrar cómo puedes interactuar con la base de datos.
+
+
+
+
+3. Preparar para Despliegue en Render
+Crear un archivo requirements.txt
+Este archivo es necesario para que Render sepa qué dependencias instalar:
+
+
+
+Crear el archivo start para Render
+Este archivo es necesario para indicarle a Render cómo ejecutar tu aplicación:
+
+    gunicorn app:app
+
+
+
+4. Subir el Proyecto a GitHub
+
+git init
+git add .
+git commit -m "Primer commit"
+git remote add origin https://github.com/tu_usuario/tu_proyecto.git
+git push -u origin main
+
+
+
+
+5. Desplegar en Render
+Crear un Web Service en Render
+Ve al panel de control de Render.
+Haz clic en "New" > "Web Service".
+Selecciona el repositorio de tu proyecto de GitHub.
+Configura el servicio:
+Environment: Elige Python.
+Build Command: pip install -r requirements.txt.
+Start Command: ./start.
+Agrega la variable de entorno DATABASE_URL:
+Nombre: DATABASE_URL.
+Valor: Copia la External Database URL de PostgreSQL en Render (debería verse como postgres://user:password@host.render.com:5432/database_name).
+Haz clic en Create Web Service.
+
+
+6. Migrar la Base de Datos
+Una vez que tu aplicación esté desplegada, abre el Web Shell en Render:
+
+Ve al panel de control de tu aplicación.
+Haz clic en Shell.
+Ejecuta los comandos de migración en Python:
+
+
+
+
+Verificar el Despliegue
+En el panel de Render, ve al servicio web que creaste.
+Encuentra la URL pública de tu aplicación, que tiene este formato:
+
+https://tu-app.onrender.com
+
+
+
 
