@@ -250,28 +250,37 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Explicación:
+## Explicación
+
+### SQLALCHEMY_DATABASE_URI
+Configura la URI para conectar Flask con PostgreSQL. Esto se hace leyendo una variable de entorno llamada `DATABASE_URL`.
 
 SQLALCHEMY_DATABASE_URI: Configura la URI para conectar Flask con PostgreSQL. Esto se hace leyendo una variable de entorno llamada DATABASE_URL.
+
+
+### Modelo de ejemplo
+El modelo `User` es solo un ejemplo para ilustrar cómo puedes interactuar con la base de datos.
+
 Modelo de ejemplo: El modelo User es solo un ejemplo para ilustrar cómo puedes interactuar con la base de datos.
+---
 
+## 3. Preparar para Despliegue en Render
 
-
-
-3. Preparar para Despliegue en Render
-Crear un archivo requirements.txt
+### Crear un archivo `requirements.txt`
 Este archivo es necesario para que Render sepa qué dependencias instalar:
 
 
 
-Crear el archivo start para Render
+### Crear el archivo `start` para Render
 Este archivo es necesario para indicarle a Render cómo ejecutar tu aplicación:
 
-    gunicorn app:app
+```bash
+gunicorn app:app
 
 
 
-4. Subir el Proyecto a GitHub
+
+## 4. Subir el Proyecto a GitHub
 
 git init
 git add .
@@ -280,39 +289,37 @@ git remote add origin https://github.com/tu_usuario/tu_proyecto.git
 git push -u origin main
 
 
+##5. Desplegar en Render
 
+###Crear un Web Service en Render
 
-5. Desplegar en Render
-Crear un Web Service en Render
 Ve al panel de control de Render.
+
 Haz clic en "New" > "Web Service".
+
 Selecciona el repositorio de tu proyecto de GitHub.
-Configura el servicio:
+
+Configurar el servicio:
+
 Environment: Elige Python.
+
 Build Command: pip install -r requirements.txt.
+
 Start Command: ./start.
-Agrega la variable de entorno DATABASE_URL:
+
+Agregar la variable de entorno DATABASE_URL:
+
 Nombre: DATABASE_URL.
+
 Valor: Copia la External Database URL de PostgreSQL en Render (debería verse como postgres://user:password@host.render.com:5432/database_name).
-Haz clic en Create Web Service.
 
+Haz clic en "Create Web Service".
 
-6. Migrar la Base de Datos
-Una vez que tu aplicación esté desplegada, abre el Web Shell en Render:
+##6. Migrar la Base de Datos
+###Una vez que tu aplicación esté desplegada, abre el Web Shell en Render:
 
 Ve al panel de control de tu aplicación.
-Haz clic en Shell.
-Ejecuta los comandos de migración en Python:
 
+Haz clic en "Shell".
 
-
-
-Verificar el Despliegue
-En el panel de Render, ve al servicio web que creaste.
-Encuentra la URL pública de tu aplicación, que tiene este formato:
-
-https://tu-app.onrender.com
-
-
-
-
+Ejecuta los comandos de migración en Python.
