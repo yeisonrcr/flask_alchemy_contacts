@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  flask_app:
+    container_name: "web"  # Nombre del contenedor para la aplicación Flask
+    build: .               # Construye la imagen Docker usando el Dockerfile en el directorio actual
+    ports:
+      - "5000:5000"       # Mapea el puerto 5000 del contenedor al puerto 5000 del host
+    volumes:
+      - .:/code            # Monta el directorio actual en el contenedor como /code
+    links:
+      - flask_db           # Conecta este servicio con el servicio flask_db
+
+  flask_db:
+    container_name: "database"  # Nombre del contenedor para la base de datos MySQL
+    image: mysql                # Imagen oficial de MySQL
+    environment:
+      MYSQL_ROOT_PASSWORD: zbyj8918 # Contraseña para el usuario root de MySQL
+      MYSQL_DATABASE: ecomycr # Nombre de la base de datos a crear
+    ports:
+      - "3306:3306"            # Mapea el puerto 3306 del contenedor al puerto 3306 del host

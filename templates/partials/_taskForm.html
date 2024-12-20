@@ -1,0 +1,39 @@
+<form action="/new" method="POST" class="card bg-black text-light">
+  <div class="card-body p-4">
+    <h1 class="h5 mb-4">Agregar Nuevo Contacto</h1>
+
+    <div class="mb-3">
+      <label for="fullname">Nombre Completo:</label>
+      <input
+        type="text"
+        name="fullname"
+        class="form-control rounded-0 bg-dark border-0 text-white"
+        placeholder="Write fullname"
+        autofocus
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="email">Email:</label>
+      <input
+        type="text"
+        name="email"
+        class="form-control rounded-0 bg-dark border-0 text-white"
+        placeholder="Write your email"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="phone">Teléfono:</label>
+      <input
+        type="text"
+        name="phone"
+        class="form-control rounded-0 bg-dark border-0 text-white"
+        placeholder="+506 8993 2123"
+      />
+    </div>
+
+    <button class="btn btn-primary">Guardar</button>
+  </div>
+</form>
