@@ -1,0 +1,22 @@
+Importaciones:
+
+unittest: Usado para realizar pruebas unitarias.
+app: La aplicación Flask principal.
+db: El objeto que maneja la base de datos (SQLAlchemy).
+Contact: El modelo de datos de contacto.
+FlaskTestCase:
+
+Clase que hereda de unittest.TestCase para definir pruebas.
+setUp y tearDown: Métodos que configuran y limpian el entorno de prueba antes y después de cada prueba.
+test_index: Verifica que la página principal responda correctamente y contenga un texto específico.
+test_add_contact: Prueba que se pueda agregar un contacto correctamente.
+test_update_contact: Verifica que se pueda actualizar un contacto existente.
+test_delete_contact: Verifica que se pueda eliminar un contacto.
+
+
+Las pruebas se ejecutan usando unittest desde la línea de comandos con python -m unittest test_app.py.
+Cada prueba realiza una solicitud HTTP a las rutas de la aplicación Flask y verifica las respuestas (código de estado, contenido).
+
+Asegúrate de que las rutas como /new, /update/<id>, y /delete/<id> estén bien definidas en tu aplicación Flask.
+Verifica que la base de datos en memoria (sqlite:///:memory:) esté correctamente configurada en tu aplicación para pruebas.
+Podrías agregar más pruebas, por ejemplo, para verificar la validación de los datos de entrada o el comportamiento ante errores.

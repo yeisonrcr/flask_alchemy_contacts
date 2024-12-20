@@ -13,8 +13,11 @@ app.secret_key = 'mysesdaasdasf34234eqafasfasfasfcret'
 # Database configuration
 # DATABASE_CONNECTION_URI is imported from the config module
 print(DATABASE_CONNECTION_URI)  # Debugging: Prints the database connection URI
+
+
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_CONNECTION_URI
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # Disables SQLAlchemy event system to save resources
+
 
 # Disable caching for static files (useful during development)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0

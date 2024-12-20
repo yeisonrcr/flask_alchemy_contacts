@@ -6,12 +6,17 @@ from utils.db import db
 contacts = Blueprint("contacts", __name__)
 
 # Ruta principal que muestra todos los contactos
+
+
 @contacts.route('/')
 def index():
     contacts = Contact.query.all()  # Consulta todos los contactos en la base de datos
-    return render_template('index.html', contacts=contacts)  # Renderiza la plantilla 'index.html' con los contactos
+    # Renderiza la plantilla 'index.html' con los contactos
+    return render_template('index.html', contacts=contacts)
 
 # Ruta para agregar un nuevo contacto
+
+
 @contacts.route('/new', methods=['POST'])
 def add_contact():
     if request.method == 'POST':
@@ -30,9 +35,12 @@ def add_contact():
 
         flash('¡Contacto agregado exitosamente!')  # Mensaje de éxito
 
-        return redirect(url_for('contacts.index'))  # Redirigir a la página principal
+        # Redirigir a la página principal
+        return redirect(url_for('contacts.index'))
 
 # Ruta para actualizar un contacto existente
+
+
 @contacts.route("/update/<string:id>", methods=["GET", "POST"])
 def update(id):
     # Obtener el contacto por ID
@@ -48,11 +56,15 @@ def update(id):
 
         flash('¡Contacto actualizado exitosamente!')  # Mensaje de éxito
 
-        return redirect(url_for('contacts.index'))  # Redirigir a la página principal
+        # Redirigir a la página principal
+        return redirect(url_for('contacts.index'))
 
-    return render_template("update.html", contact=contact)  # Renderizar el formulario de actualización
+    # Renderizar el formulario de actualización
+    return render_template("update.html", contact=contact)
 
 # Ruta para eliminar un contacto existente
+
+
 @contacts.route("/delete/<id>", methods=["GET"])
 def delete(id):
     contact = Contact.query.get(id)  # Obtener el contacto por ID
@@ -61,9 +73,14 @@ def delete(id):
 
     flash('¡Contacto eliminado exitosamente!')  # Mensaje de éxito
 
-    return redirect(url_for('contacts.index'))  # Redirigir a la página principal
+    # Redirigir a la página principal
+    return redirect(url_for('contacts.index'))
 
 # Ruta para la página "Acerca de"
+
+
 @contacts.route("/about")
 def about():
-    return render_template("about.html")  # Renderizar la plantilla "about.html"
+    # Renderizar la plantilla "about.html"
+    return render_template("about.html")
+

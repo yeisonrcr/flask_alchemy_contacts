@@ -13,3 +13,21 @@ database = "ecomycr"  # Nombre de la base de datos (o usar os.environ["MYSQL_DAT
 # URI de conexión a la base de datos
 # Formato: mysql://usuario:contraseña@host/nombre_base_datos
 DATABASE_CONNECTION_URI = f'mysql://{user}:{password}@{host}/{database}'
+
+
+class Config:
+    # Configuraciones comunes
+    SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')  # Define una clave secreta
+    SQLALCHEMY_TRACK_MODIFICATIONS = False  # Desactiva el seguimiento de modificaciones de SQLAlchemy
+
+class DevelopmentConfig(Config):
+    ENV = 'development'
+    DATABASE_CONNECTION_URI = f'mysql://{user}:{password}@{host}/{database}'  # Configuración MySQL para desarrollo
+
+class TestingConfig(Config):
+    ENV = 'testing'
+    DATABASE_CONNECTION_URI = 'sqlite:///:memory:'  # Base de datos en memoria para pruebas
+
+class ProductionConfig(Config):
+    ENV = 'production'
+    DATABASE_CONNECTION_URI = f'mysql://{user}:{password}@{host}/{database}'  # Configuración MySQL para producción
