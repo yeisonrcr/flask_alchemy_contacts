@@ -179,6 +179,8 @@ Ejecuta las pruebas con:
 python -m unittest test_app.py
 ```
 
+unittest es el módulo estándar de Python para realizar pruebas automatizadas. Permite escribir y ejecutar casos de prueba para garantizar que el código funcione como se espera. Al ejecutarlo con python -m unittest, Python busca y ejecuta todas las pruebas definidas en tu código.
+
 O utilizando `pytest`:
 
 ```bash
