@@ -12,7 +12,8 @@ database = "ecomycr"  # Nombre de la base de datos (o usar os.environ["MYSQL_DAT
 
 # URI de conexión a la base de datos
 # Formato: mysql://usuario:contraseña@host/nombre_base_datos
-DATABASE_CONNECTION_URI = f'mysql://{user}:{password}@{host}/{database}'
+DATABASE_CONNECTION_URI = f'postgresql://ecomycr:w9M5on5qUPZebxrac9JXMbnfVhE6TCSx@dpg-ctiv2abtq21c73dv4h00-a/ecomycr_ift4'
+
 
 
 class Config:
