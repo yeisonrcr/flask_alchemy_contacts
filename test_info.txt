@@ -14,7 +14,12 @@ test_update_contact: Verifica que se pueda actualizar un contacto existente.
 test_delete_contact: Verifica que se pueda eliminar un contacto.
 
 
-Las pruebas se ejecutan usando unittest desde la línea de comandos con python -m unittest test_app.py.
+Las pruebas se ejecutan usando unittest desde la línea de comandos con 
+
+
+python -m unittest test_app.py.
+
+
 Cada prueba realiza una solicitud HTTP a las rutas de la aplicación Flask y verifica las respuestas (código de estado, contenido).
 
 Asegúrate de que las rutas como /new, /update/<id>, y /delete/<id> estén bien definidas en tu aplicación Flask.
