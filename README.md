@@ -1,6 +1,6 @@
 ![image](https://github.com/user-attachments/assets/a4b5eaf2-8f94-4cd8-9a21-dd283c0fcbfc)
 
-## Proyecto de práctica con Fazt Web de youtube
+## Proyecto de práctica con Fazt Web de youtube aparte se le realiza testing y se explica el código con el clean code.
 ```
 git clone https://github.com/FaztWeb/flask-sqlalchemy-crud
 cd flask-sqlalchemy-crud
