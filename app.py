@@ -1,43 +1,42 @@
 from flask import Flask
-from routes.contacts import contacts
-from flask_sqlalchemy import SQLAlchemy
+from routes.contacts import contacts  # Importación del blueprint para las rutas de contactos
+from utils.db import db  # Objeto SQLAlchemy inicializado
+import os  # Para manejar variables de entorno
+from config import DevelopmentConfig, TestingConfig, ProductionConfig  # Configuraciones según el entorno
 
-from config import DATABASE_CONNECTION_URI
-from utils.db import db
-
-
-# Initialize the Flask application
+# Inicializar la aplicación Flask
 app = Flask(__name__)
 
-# Application settings
-# Secret key for session management and other Flask functionalities
-app.secret_key = 'mysesdaasdasf34234eqafasfasfasfcret'
+# Determina la configuración basada en el entorno
+ENV = os.getenv("FLASK_ENV", "development")  # Por defecto, se asume desarrollo
+if ENV == "development":
+    app.config.from_object(DevelopmentConfig)
+elif ENV == "production":
+    app.config.from_object(ProductionConfig)
+elif ENV == "testing":
+    app.config.from_object(TestingConfig)
+else:
+    raise ValueError(f"Entorno desconocido: {ENV}")
 
-# Database configuration
-# DATABASE_CONNECTION_URI is imported from the config module
-print(DATABASE_CONNECTION_URI)  # Debugging: Prints the database connection URI
+# Configuración adicional de la aplicación
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # Desactiva el sistema de eventos de SQLAlchemy para ahorrar recursos
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Desactiva el caché de archivos estáticos durante el desarrollo
 
+# Inicializar SQLAlchemy con la aplicación Flask
+db.init_app(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_CONNECTION_URI
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # Disables SQLAlchemy event system to save resources
-
-
-# Disable caching for static files (useful during development)
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-
-# Initialize the SQLAlchemy object with the Flask app
-SQLAlchemy(app)
-
-# Register the 'contacts' blueprint for modular route management
+# Registrar el blueprint 'contacts' para modularizar las rutas
 app.register_blueprint(contacts)
 
-
 # Crear las tablas de la base de datos si no existen
-# Esto asegura que la estructura de la base de datos esté lista antes de ejecutar la aplicación
-with app.app_context(): #fuera el if name main
+# Esto asegura que la estructura esté lista antes de ejecutar la aplicación
+with app.app_context():
     db.create_all()
 
 # Punto de entrada para ejecutar la aplicación Flask
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0")  # Ejecuta la aplicación en modo debug, accesible desde cualquier IP
+    # Determina el modo debug basado en el entorno
+    debug_mode = ENV == "development"  # Debug solo en entorno de desarrollo
 
+    # Ejecuta la aplicación
+    app.run(debug=debug_mode, host="0.0.0.0")
