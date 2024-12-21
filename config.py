@@ -4,31 +4,33 @@ import os
 # Cargar las variables de entorno desde un archivo .env
 load_dotenv()
 
-# Configuración manual de credenciales (se recomienda usar variables de entorno en producción)
-user = "ecomycr"  # Nombre de usuario para la base de datos (o usar os.environ["MYSQL_USER"])
-password = "zbyj8918"  # Contraseña de la base de datos (o usar os.environ["MYSQL_PASSWORD"])
-host = "localhost"  # Dirección del host de la base de datos (o usar os.environ["MYSQL_HOST"])
-database = "ecomycr"  # Nombre de la base de datos (o usar os.environ["MYSQL_DATABASE"])
+# Configuración de variables de entorno para credenciales de la base de datos
+USER = os.getenv("MYSQL_USER", "ecomycr")  # Nombre de usuario por defecto
+PASSWORD = os.getenv("MYSQL_PASSWORD", "zbyj8918")  # Contraseña por defecto
+HOST = os.getenv("MYSQL_HOST", "localhost")  # Dirección del host por defecto
+DATABASE = os.getenv("MYSQL_DATABASE", "ecomycr")  # Nombre de la base de datos por defecto
 
-# URI de conexión a la base de datos
-# Formato: mysql://usuario:contraseña@host/nombre_base_datos
-DATABASE_CONNECTION_URI = f'postgresql://ecomycr:w9M5on5qUPZebxrac9JXMbnfVhE6TCSx@dpg-ctiv2abtq21c73dv4h00-a/ecomycr_ift4'
-
-
+# URI de conexión a la base de datos PostgreSQL para producción (si aplica)
+POSTGRES_URI = os.getenv(
+    "POSTGRES_URI",
+    "postgresql://ecomycr:w9M5on5qUPZebxrac9JXMbnfVhE6TCSx@dpg-ctiv2abtq21c73dv4h00-a/ecomycr_ift4"
+)
 
 class Config:
-    # Configuraciones comunes
-    SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')  # Define una clave secreta
-    SQLALCHEMY_TRACK_MODIFICATIONS = False  # Desactiva el seguimiento de modificaciones de SQLAlchemy
+    """Configuración base común para todas las configuraciones."""
+    SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')  # Clave secreta con valor por defecto
 
 class DevelopmentConfig(Config):
+    """Configuración para el entorno de desarrollo."""
     ENV = 'development'
-    DATABASE_CONNECTION_URI = f'mysql://{user}:{password}@{host}/{database}'  # Configuración MySQL para desarrollo
+    SQLALCHEMY_DATABASE_URI = f'mysql://{USER}:{PASSWORD}@{HOST}/{DATABASE}'
 
 class TestingConfig(Config):
+    """Configuración para el entorno de pruebas."""
     ENV = 'testing'
-    DATABASE_CONNECTION_URI = 'sqlite:///:memory:'  # Base de datos en memoria para pruebas
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # Base de datos en memoria
 
 class ProductionConfig(Config):
+    """Configuración para el entorno de producción."""
     ENV = 'production'
-    DATABASE_CONNECTION_URI = f'mysql://{user}:{password}@{host}/{database}'  # Configuración MySQL para producción
+    SQLALCHEMY_DATABASE_URI = POSTGRES_URI  # Usa PostgreSQL en producción
