@@ -23,7 +23,7 @@ class Config:
 class DevelopmentConfig(Config):
     """Configuración para el entorno de desarrollo."""
     ENV = 'development'
-    SQLALCHEMY_DATABASE_URI = f'mysql://{USER}:{PASSWORD}@{HOST}/{DATABASE}'
+    SQLALCHEMY_DATABASE_URI = POSTGRES_URI #cambiar en render
 
 class TestingConfig(Config):
     """Configuración para el entorno de pruebas."""
