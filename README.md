@@ -1,4 +1,3 @@
-![image](https://github.com/user-attachments/assets/a4b5eaf2-8f94-4cd8-9a21-dd283c0fcbfc)
 
 ## Proyecto de práctica con Fazt Web de youtube aparte se le realiza testing y se explica el código con el clean code.
 ```
@@ -10,6 +9,8 @@ cd flask-sqlalchemy-crud
 
 # CRUD de Contactos con Flask
 Este proyecto implementa una aplicación web para gestionar contactos utilizando Flask. Incluye funcionalidades CRUD (Crear, Leer, Actualizar, Eliminar) y está estructurado para facilitar la extensión y el mantenimiento del código.
+
+![image](https://github.com/user-attachments/assets/a4b5eaf2-8f94-4cd8-9a21-dd283c0fcbfc)
 
 ## Características Principales
 
