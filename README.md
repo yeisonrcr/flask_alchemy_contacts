@@ -4,8 +4,10 @@
 ```
 git clone https://github.com/FaztWeb/flask-sqlalchemy-crud
 cd flask-sqlalchemy-crud
-docker-compose up
+
 ```
+#https://flask-alchemy-contacts.onrender.com/
+
 # CRUD de Contactos con Flask
 Este proyecto implementa una aplicación web para gestionar contactos utilizando Flask. Incluye funcionalidades CRUD (Crear, Leer, Actualizar, Eliminar) y está estructurado para facilitar la extensión y el mantenimiento del código.
 
